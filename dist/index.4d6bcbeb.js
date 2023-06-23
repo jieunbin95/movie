@@ -963,7 +963,15 @@ const searchMovies = async (page)=>{
         store.state.message = "";
     }
     try {
-        const res = await fetch(`http://omdbapi.com?apikey=7035c60c&s=${store.state.searchText}&page=${page}`);
+        // const res = await fetch(`http://omdbapi.com?apikey=7035c60c&s=${store.state.searchText}&page=${page}`)
+        const res = await fetch("/api/movie", {
+            method: "POST",
+            //api/movie파일에 request를 body로 받고자 한다면 get(기본값)아닌 post를 변경해주어야 한다
+            body: JSON.stringify({
+                title: store.state.searchText,
+                page
+            })
+        });
         const { Search , totalResults , Response , Error  } = await res.json();
         if (Response === "True") {
             store.state.movies = [
@@ -983,7 +991,13 @@ const searchMovies = async (page)=>{
 };
 const getMovieDetails = async (id)=>{
     try {
-        const res = await fetch(`http://omdbapi.com?apikey=7035c60c&i=${id}&plot=full`);
+        // const res=await fetch(`http://omdbapi.com?apikey=7035c60c&i=${id}&plot=full`)
+        const res = await fetch("/api/movie", {
+            method: "POST",
+            body: JSON.stringify({
+                id
+            })
+        });
         store.state.movie = await res.json();
     } catch (error) {
         console.log("getMovieDetails error:", error);

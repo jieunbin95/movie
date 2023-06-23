@@ -2,3 +2,5 @@
 dis
 node_modules
 .vscode
+.vercel
+.env

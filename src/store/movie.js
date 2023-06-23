@@ -19,7 +19,16 @@ export const searchMovies = async page => {
     store.state.message = ''
   }
   try{
-    const res = await fetch(`http://omdbapi.com?apikey=7035c60c&s=${store.state.searchText}&page=${page}`)
+    // const res = await fetch(`http://omdbapi.com?apikey=7035c60c&s=${store.state.searchText}&page=${page}`)
+    const res = await fetch('/api/movie',{
+      method:'POST',      
+      //api/movie파일에 request를 body로 받고자 한다면 get(기본값)아닌 post를 변경해주어야 한다
+      body:JSON.stringify({
+        title:store.state.searchText,
+        page
+      })      
+      //fetch를 통해 body부분을 보내고자할 때 문자데이터로 보내야 한다(객체x)따라서 JSON.stringify매소드를 사용해준다
+    })
     const { Search, totalResults, Response, Error } = await res.json()
     if (Response === 'True') {
       store.state.movies = [
@@ -41,7 +50,13 @@ export const searchMovies = async page => {
 
 export const getMovieDetails=async id=>{
   try{
-    const res=await fetch(`http://omdbapi.com?apikey=7035c60c&i=${id}&plot=full`)
+    // const res=await fetch(`http://omdbapi.com?apikey=7035c60c&i=${id}&plot=full`)
+    const res=await fetch('/api/movie',{
+      method: 'POST',
+      body:JSON.stringify({
+        id
+      })
+    })
     store.state.movie=await res.json()
   } catch(error){
     console.log('getMovieDetails error:',error)
