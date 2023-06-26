@@ -1,6 +1,15 @@
 import { Component } from '../core/jieun'
 
+interface State{
+  [key:string]:unknown
+  menus:{
+    name:string,
+    href:string
+  }[]
+}
+
 export default class TheHeader extends Component {
+  public state!:State      //타입-초기화코드가 필요 개발자입장-초기화코드가 없어야함
   constructor() {
     super({
       tagName: 'header',

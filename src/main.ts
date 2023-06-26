@@ -4,6 +4,6 @@ import router from './routes'
 
 
 const root=document.querySelector('#root')
-root.append(new App().el)  //root id값에 생성자함수 app를 추가
+root?.append(new App().el)  //root id값에 생성자함수 app를 추가
 
 router()
